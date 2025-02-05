@@ -13,6 +13,14 @@ else
     sudo apt update && sudo apt install -y python3-pip
 fi
 
+# Check and install cec-utils if not installed
+if command_exists cec-client; then
+    echo "cec-utils is already installed."
+else
+    echo "Installing cec-utils..."
+    sudo apt update && sudo apt install -y cec-utils
+fi
+
 # Create virtual environment
 echo "Creating virtual environment..."
 python3 -m venv venv
