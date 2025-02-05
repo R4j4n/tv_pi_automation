@@ -6,7 +6,7 @@ SERVICE_FILE="/etc/systemd/system/$SERVICE_NAME.service"
 CWD=$(pwd)
 USER=$(whoami)
 PYTHON_EXEC="$CWD/venv/bin/python3"
-SCRIPT_PATH="$CWD/server/streaming_api.py"
+SCRIPT_PATH="$CWD/tv_automate.py"
 
 # Step 1: Create the systemd service file
 echo "Creating systemd service file at $SERVICE_FILE..."
