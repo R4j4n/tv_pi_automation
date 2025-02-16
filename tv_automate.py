@@ -18,9 +18,10 @@ logging.basicConfig(
 
 
 class TVController:
-    def __init__(self):
+    def __init__(self, switch_input=False):
         self.device_id = "0"
         self.cec_client = "cec-client"
+        self.switch_input = switch_input
 
     def execute_cec_command(self, command):
         """Execute a CEC command and handle potential errors"""
@@ -47,7 +48,7 @@ class TVController:
             return False
 
     def turn_on_tv(self):
-        """Turn on TV and switch to default HDMI input"""
+        """Turn on TV and optionally switch to default HDMI input"""
         logging.info("Attempting to turn on TV...")
 
         # Turn on TV
@@ -58,12 +59,15 @@ class TVController:
         # Wait for TV to fully power on
         time.sleep(15)
 
-        # Switch to default HDMI input
-        if not self.execute_cec_command("tx 1F:82:10:00"):
-            logging.error("Failed to switch HDMI input")
-            return False
+        # Switch to default HDMI input if switch_input is True
+        if self.switch_input:
+            if not self.execute_cec_command("tx 1F:82:10:00"):
+                logging.error("Failed to switch HDMI input")
+                return False
+            logging.info("TV turned on and input switched successfully")
+        else:
+            logging.info("TV turned on successfully (input switching disabled)")
 
-        logging.info("TV turned on and input switched successfully")
         return True
 
     def turn_off_tv(self):
@@ -101,10 +105,14 @@ def setup_schedule(controller):
 def main():
     """Main function to run the TV scheduler"""
     try:
-        controller = TVController()
+        # Initialize controller with switch_input parameter (default is False)
+        switch_input = False
+        controller = TVController(switch_input=switch_input)
         setup_schedule(controller)
 
-        logging.info("TV scheduler started")
+        logging.info(
+            f"TV scheduler started (input switching {'enabled' if switch_input else 'disabled'})"
+        )
 
         while True:
             try:
