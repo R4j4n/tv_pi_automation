@@ -88,16 +88,14 @@ def setup_schedule(controller):
     schedule.clear()
 
     # Schedule for Monday to Thursday and Sunday
-    weekday_schedule = ["monday", "tuesday", "wednesday", "thursday", "sunday"]
-    for day in weekday_schedule:
-        schedule.every().day.at("09:30").do(controller.turn_on_tv).tag(day)
-        schedule.every().day.at("19:55").do(controller.turn_off_tv).tag(day)
+    for day in ["monday", "tuesday", "wednesday", "thursday", "sunday"]:
+        getattr(schedule.every(), day).at("09:30").do(controller.turn_on_tv)
+        getattr(schedule.every(), day).at("19:55").do(controller.turn_off_tv)
 
     # Schedule for Friday and Saturday
-    weekend_schedule = ["friday", "saturday"]
-    for day in weekend_schedule:
-        schedule.every().day.at("08:30").do(controller.turn_on_tv).tag(day)
-        schedule.every().day.at("21:55").do(controller.turn_off_tv).tag(day)
+    for day in ["friday", "saturday"]:
+        getattr(schedule.every(), day).at("08:30").do(controller.turn_on_tv)
+        getattr(schedule.every(), day).at("21:55").do(controller.turn_off_tv)
 
     logging.info("Schedule setup completed")
 

@@ -1,0 +1,7 @@
+2025-02-21 20:34:56,151 - INFO - Schedule setup completed
+2025-02-21 20:34:56,151 - INFO - TV scheduler started (input switching disabled)
+2025-02-21 20:35:56,151 - INFO - Attempting to turn off TV...
+2025-02-21 20:35:56,656 - ERROR - Command failed: echo "standby 0" | cec-client -s -d 1
+2025-02-21 20:35:56,656 - ERROR - Error output: 
+2025-02-21 20:35:56,656 - ERROR - Failed to turn off TV
+2025-02-21 20:36:14,958 - INFO - TV scheduler stopped by user
